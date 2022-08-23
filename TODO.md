@@ -1,0 +1,7 @@
+- [ ] Visual frontend to be able to see and click on subway lines and their stops on a map.
+- [ ] API Authentication
+    - Maybe some sort of `POST /tokens` that gives back a JWT.
+- [ ] Caching of MBTA API Results
+    - Use `Last-Modified` and `If-Modified-Since` headers. This could be used in combination with something like Redis. If we get back a 304, we fetch the response from our Redis cache. Otherwise, we make a request and update the cache.
+    - This adds complexity but would be useful for performance and if we're running up against the rate limit.
+- [ ] `gbpt_api/mbta` could be it's own standalone package.

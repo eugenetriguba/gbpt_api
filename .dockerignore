@@ -1,0 +1,7 @@
+README.md
+Dockerfile
+docker-compose.yaml
+__pycache__
+.coverage
+.pytest_cache
+.mypy_cache

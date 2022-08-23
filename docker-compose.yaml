@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  api:
+    image: eugenetriguba/gbpt_api:development
+    container_name: gbpt_api
+    build:
+      dockerfile: Dockerfile
+      context: .
+      args:
+        ENV: dev
+    command: "uvicorn gbpt_api.core.app:run_api --port=8000 --host=0.0.0.0 --factory --reload"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/usr/local/src/api

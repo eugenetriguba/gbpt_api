@@ -1,0 +1,64 @@
+[tool.poetry]
+authors     = ["Eugene Triguba <eugenetriguba@gmail.com>"]
+description = "API for Greater Boston Public Transit Subways"
+name        = "gbpt_api"
+readme      = "README.md"
+repository  = "https://github.com/eugenetriguba/gbpt"
+version     = "0.1.0"
+
+[tool.poetry.dependencies]
+fastapi         = "^0.79.1"
+python          = "^3.10"
+python-decouple = "^3.6"
+pyyaml          = "^6.0"
+requests        = "^2.28.1"
+uvicorn         = "^0.18.2"
+
+[tool.poetry.group.dev.dependencies]
+taskipy = "^1.10.2"
+
+[tool.poetry.group.lint.dependencies]
+black          = "^22.6.0"
+flake8         = "^5.0.4"
+isort          = "^5.10.1"
+mypy           = "^0.971"
+types-requests = "^2.28.9"
+
+[tool.poetry.group.test.dependencies]
+pyfakefs      = "^4.6.3"
+pytest        = "^7.1.2"
+pytest-cov    = "^3.0.0"
+pytest-sugar  = "^0.9.5"
+pytest-vcr    = "^1.0.2"
+requests-mock = "^1.9.3"
+schema        = "^0.7.5"
+vcrpy         = "^4.2.0"
+
+[tool.taskipy.tasks]
+lint           = "task lint.format && task lint.analyze && task lint.types"
+"lint.analyze" = "flake8 {module_dir} {tests_dir}"
+"lint.format"  = "black {module_dir} {tests_dir} && isort {module_dir} {tests_dir}"
+"lint.types"   = "mypy {module_dir} {tests_dir}"
+test           = "pytest {tests_dir} --cov {module_dir} --cov-report term-missing"
+"test.system"  = "pytest {tests_dir}/system"
+"test.unit"    = "pytest {tests_dir}/unit"
+
+[tool.taskipy.settings]
+use_vars = true
+
+[tool.taskipy.variables]
+module_dir = "gbpt_api"
+tests_dir  = "tests"
+
+[tool.isort]
+known_first_party = ["gbpt_api"]
+known_third_party = ["fastapi", "pytest"]
+line_length       = 80
+profile           = "black"
+
+[tool.black]
+line-length = 80
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires      = ["poetry-core>=1.0.0"]
